@@ -8,6 +8,6 @@ services:
     ports:
       - "4200:4200" # Port pour l'interface Prefect si besoin
     environment:
-      - PREFECT_API_URL=http://localhost:4200
+      - PREFECT_API_URL=${PREFECT_API_URL}
     command: ["prefect", "server", "start", "--host", "0.0.0.0"]
 
