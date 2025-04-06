@@ -1,12 +1,13 @@
 services:
-  prefect:
+  prefect-code:
     build: .
     container_name: prefect_etl
-    volumes:
-      - ./src:/app
-      - .env:/app/.env
     ports:
       - "4200:4200"
+    volumes:
+      - ./src/rss:/app/rss
+      - .env:/app/.env
+      - ${DB_SQLITE3_PATH}:/app/db.sqlite3
     environment:
       - PREFECT_API_URL=${PREFECT_API_URL}
       - GEMINI_API_KEY=${GEMINI_API_KEY}
