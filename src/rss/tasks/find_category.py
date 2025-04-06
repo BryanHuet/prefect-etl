@@ -1,7 +1,7 @@
 from prefect import task, get_run_logger
 from google import genai
 from utils.utils import  get_db_connection, get_sql_file
-
+import os
 def is_one_word(texte: str) -> bool:
     texte = texte.strip()
 
@@ -38,7 +38,7 @@ def find_category(article_id, title, description):
     categories = cursor.fetchall()
     categories = ", ".join(cat[0] for cat in categories)
 
-    client = genai.Client(api_key="AIzaSyCGX6WZsw99BoAgX71_X4G7nSAdEsj6bnk")
+    client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
 
     query = "Using the title : \"" + title + "\" and the description \""+description+"\", select the most relevant category from "+categories+" if one matches over 90%; otherwise, create a new one. Translated it in french and return only the category nothing else."
 

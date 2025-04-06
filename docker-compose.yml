@@ -9,3 +9,4 @@ services:
       - "4200:4200"
     environment:
       - PREFECT_API_URL=${PREFECT_API_URL}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
