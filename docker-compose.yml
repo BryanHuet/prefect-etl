@@ -1,13 +1,11 @@
-
 services:
   prefect:
     build: .
     container_name: prefect_etl
     volumes:
-      - ./app:/app
+      - ./src:/app
+      - .env:/app/.env
     ports:
-      - "4200:4200" # Port pour l'interface Prefect si besoin
+      - "4200:4200"
     environment:
       - PREFECT_API_URL=${PREFECT_API_URL}
-    command: ["prefect", "server", "start", "--host", "0.0.0.0"]
-

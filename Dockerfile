@@ -1,19 +1,25 @@
-FROM python:3.11-slim
+# Use the official Python runtime image
+FROM python:3.12.9-bookworm
 
 # Installer les dépendances de base
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     && rm -rf /var/lib/apt/lists/*
 
-# Installer Prefect et Pandas
-RUN pip install --no-cache-dir prefect pandas
+# Upgrade pip
+RUN pip install --upgrade pip
 
-# Définir le répertoire de travail
+# Create the app directory
+RUN mkdir /app
 WORKDIR /app
 
-# Exposer le port pour l'API de Prefect (si besoin)
+# Copy the Django project  and install dependencies
+COPY requirements.txt  /app/
+
+# run this command to install all dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Expose the prefect port
 EXPOSE 4200
 
-# Définir la commande par défaut
-CMD ["prefect", "version"]
-
+CMD ["prefect", "server", "start", "--host", "0.0.0.0"]
